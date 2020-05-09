@@ -106,7 +106,7 @@ async def help(ctx):
     e.add_field(name='`fun`', value='Commandes de divertissement')
     e.set_footer(text='Entrez :3help <catégorie> pour afficher les commandes spécifiques à chaque catégorie')
     if ctx.author.id == 458586186328571913 :
-            e.add_field(name='`master`', value="My master's commands !")
+        e.add_field(name='`master`', value="My master's commands !")
     await ctx.send(embed=e)
 
 @help.command(name="info")
