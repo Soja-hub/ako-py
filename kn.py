@@ -51,7 +51,6 @@ async def on_ready():
     print(('[' + ctime()) + '] Presence successfully updated !')
     print('___________________________________________________')
     bot.loop.create_task(status_task())
-    bot.loop.create_task(update_stats())
 
 @bot.event
 async def on_member_join(member):
