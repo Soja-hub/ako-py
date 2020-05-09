@@ -228,9 +228,9 @@ async def ban(ctx, member: discord.Member, *, reason: str = None):
         else:
             await member.ban(reason=reason)
             await ctx.send(f'{member} a été banni ! Raison : ```{reason}```')
-        except Exception as e:
-            print(e.args)
-            await ctx.send('Une erreur est survenue.')
+    except Exception as e:
+        print(e.args)
+        await ctx.send('Une erreur est survenue.')
 
 @commands.has_permissions(kick_members=True)
 @bot.command()
