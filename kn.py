@@ -1,4 +1,4 @@
-botversion = '1.2.6'
+botversion = '1.2.6 rev AKO'
 print("___________________________________________________")
 print("""
             _  __                    _  
@@ -38,359 +38,241 @@ print(('[' + ctime()) + "] Lib 'dblpy' successfully imported !")
 import aiohttp
 print(('[' + ctime()) + "] Lib 'aiohttp' successfully imported !")
 print(('[' + ctime()) + '] Establishing connection with the bot...')
-bot = commands.Bot(description='Kanna - The Kawaii Discord bot - Server management bot ©2018 Poulpe#2356', command_prefix='k!')
+bot = commands.Bot(description='Kanna - The Kawaii Discord bot - Server management bot ©2018 Poulpe#2356', command_prefix=':3')
 bot.remove_command('help')
-
-
-class DiscordBotsOrgAPI:
-	def __init__(self, bot):
-		self.bot = bot
-		self.token = os.environ['DBLTOKEN']
-		self.dblpy = dbl.Client(self.bot, self.token)
-		self.bot.loop.create_task(self.update_stats())
-	
-	async def update_stats(self):
-		while True:
-			try:
-				await self.dblpy.post_server_count()
-			except Exception as e:
-				print(e.args)
-			await asyncio.sleep(1800)
-
-def setup(bot):
-    bot.add_cog(DiscordBotsOrgAPI(bot))
 
 @bot.event
 async def on_ready():
-	print(('[' + ctime()) + '] Connection successfully established with the bot user :', bot.user.name)
-	print('Bot user ID :', bot.user.name)
-	await bot.change_presence(activity=discord.Game(name=f'with {len(bot.users)} users, on {len(bot.guilds)} servers | k!help'))
-	print(('[' + ctime()) + '] Presence successfully updated !')
-	print('___________________________________________________')
-	bot.loop.create_task(status_task())
-	bot.loop.create_task(update_stats())
+    print(('[' + ctime()) + '] Connection successfully established with the bot user :', bot.user.name)
+    print('Bot user ID :', bot.user.name)
+    await bot.change_presence(activity=discord.Game(name=f'with {len(bot.users)} users, on {len(bot.guilds)} servers | k!help'))
+    print(('[' + ctime()) + '] Presence successfully updated !')
+    print('___________________________________________________')
+    bot.loop.create_task(status_task())
+    bot.loop.create_task(update_stats())
 
 async def status_task():
-	while True:
-		names = ['k!help', 'with Poulpy', 'on AP3RTURE', f'with {len(bot.users)} users', f'on {len(bot.guilds)} servers']
-		for name in names:
-			await bot.change_presence(activity=discord.Game(name=name))
-			await asyncio.sleep(6)
-
-#emotes
-prefiximg = ':prefiximg:505768310227599371'
-#end-emotes
-	
-@bot.event
-async def on_guild_join(guild):
-	my_guild = bot.get_guild(462871882916560896)
-	join = my_guild.get_channel(462875598184775700)
-	e = discord.Embed(description='', title='Server Joined - {}'.format(guild.name), color=1565439, timestamp=datetime.utcnow())
-	e.add_field(name='Member count : {}'.format(guild.member_count), value='Created at {}'.format(guild.created_at))
-	e.set_footer(text='Kanna - The Kawaii Discord bot')
-	await bot.change_presence(activity=discord.Game(name=f'with {len(bot.users)} users, on {len(bot.guilds)} servers | k!help'))
-	await join.send(embed=e)
-
-@bot.event
-async def on_guild_remove(guild):
-	my_guild = bot.get_guild(462871882916560896)
-	join = my_guild.get_channel(462875598184775700)
-	e = discord.Embed(description='', title='Server left - {}'.format(guild.name), color=16744448, timestamp=datetime.utcnow())
-	e.add_field(name='Member count : {}'.format(guild.member_count), value='Created at {}'.format(guild.created_at))
-	e.set_footer(text='Kanna - The Kawaii Discord bot')
-	await bot.change_presence(activity=discord.Game(name=f'with {len(bot.users)} users, on {len(bot.guilds)} servers | k!help'))
-	await join.send(embed=e)
+    while True:
+        names = [':3help', 'caresse Soja', f'avec {len(bot.users)} personnes']
+        for name in names:
+            await bot.change_presence(activity=discord.Game(name=name))
+            await asyncio.sleep(60*60)
 
 @bot.event
 async def on_member_join(member):
-	if member.guild.id == 462871882916560896:
-		role = discord.utils.get(member.guild.roles, name='Members')
-		await member.add_roles(role)
+	serv = bot.get_guild(691697960274362371)
+	chan = serv.get_channel(691697960274362371)
+	a = """Prends les différents rôles proposés :
 
+— <#647732883254935553>
+— <#681109048229495001>
+— <#691534231976935504>
+
+Viens nous saluer dans <#640251005908287505>, on veut faire ta connaissance ! ewe
+
+Des questions ? Contacte <@580590592577503243>."""
+    if member.guild.id == 640251005476405268:
+        e = discord.Embed(title=f"Bienvenue, {member.name} !", description=a, color = 0xf9bbec)
+		await chan.send(embed=e)
 
 @bot.event
 async def on_command_error(ctx, error):
-	if isinstance(error, commands.MissingPermissions):
-		await ctx.send('I am sorry, but it looks like... you dont have the required permissions !')
-		await asyncio.sleep(0.5)
-		await ctx.send("I can't let you do that !")
-	elif isinstance(error, commands.MissingRequiredArgument):
-		await ctx.say('Member not found. Sorry... Retry please !')
-	elif isinstance(error, commands.BadArgument):
-		await ctx.say('Member not found. Retry please !')
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send('I am sorry, but it looks like you dont have the required permissions !')
+        await asyncio.sleep(0.5)
+        await ctx.send("I can't let you do that !")
+    elif isinstance(error, commands.MissingRequiredArgument):
+        await ctx.say('Member not found. Sorry... Retry please !')
+    elif isinstance(error, commands.BadArgument):
+        await ctx.say('Member not found. Retry please !')
 
 @bot.listen()
 async def on_command_error(ctx, error):
-	if isinstance(error, commands.CommandNotFound):
-		await ctx.message.add_reaction('❌')
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.message.add_reaction('❌')
 
 def is_owner(ctx):
-	if ctx.author.id == 458586186328571913:
-		return True
-	else :
-		return False
+    if ctx.author.id == 580590592577503243:
+        return True
+    else :
+        return False
 
 @bot.group(invoke_without_command=True, aliases=['hlp', 'commandlist', 'commands'])
 async def help(ctx):
-	e = discord.Embed(description="🔰 Help categories 🔰", title='➡️Interactive help', color=0x33CC33, timestamp=datetime.utcnow())
-	e.set_thumbnail(url="https://cdn.discordapp.com/emojis/377480330103488532.png?v=1")
-	e.add_field(name='`info`', value='Bot information related commands')
-	e.add_field(name='`utilities`', value='All our amazing utilities !')
-	e.add_field(name='`moderator`', value='Moderation related commands')
-	e.add_field(name='`fun`', value='Fun related commands ~^^')
-	e.set_footer(text='Type k!help <category> to display specific commands.')
-	if ctx.author.id == 458586186328571913 :
-			e.add_field(name='`master`', value="My master's commands !")
-	await ctx.send(embed=e)
+    e = discord.Embed(description="🔰 Catégories d'aide", title='➡️Interactive help', color=0x33CC33, timestamp=datetime.utcnow())
+    e.add_field(name='`info`', value='Infos du bot')
+    e.add_field(name='`utilities`', value='Utilitaires')
+    e.add_field(name='`moderator`', value='Modération')
+    e.add_field(name='`fun`', value='Commandes de divertissement')
+    e.set_footer(text='Entrez :3help <catégorie> pour afficher les commandes spécifiques à chaque catégorie')
+    if ctx.author.id == 458586186328571913 :
+            e.add_field(name='`master`', value="My master's commands !")
+    await ctx.send(embed=e)
 
 @help.command(name="info")
 async def help_info(ctx):
-	e = discord.Embed(description="📎 Basic commands 📎", title='➡️Commands list', color=0x00FFC0, timestamp=datetime.utcnow())
-	e.set_thumbnail(url="https://cdn.discordapp.com/emojis/470912852543275009.gif?v=1")
-	e.add_field(name=f'<{prefiximg}>`info`', value='Get to know me :3')
-	e.add_field(name=f'<{prefiximg}>`ping`', value='Test my reactivity !')
-	e.add_field(name=f'<{prefiximg}>`suggest <suggestion>`', value='Tell us what you think we could improve on Kanna. Your suggestion will be sent to the official bot server.')
-	e.add_field(name=f'<{prefiximg}>`bugreport <bug>`', value ='If you found some bug or error on Kanna, just tell us via this command ! Your report will be sent to the official bot server.')
-	e.add_field(name=f'<{prefiximg}>`help`', value='Displays the primary help message')
-	await ctx.send(embed=e)
+    e = discord.Embed(description="📎 Commandes de base", title='➡️Commands list', color=0x00FFC0, timestamp=datetime.utcnow())
+    e.add_field(name=f'<{prefiximg}>`info`', value="Apprenez-en plus sur moi :3")
+    e.add_field(name=f'<{prefiximg}>`ping`', value="Testez ma réactivité !")
+    e.add_field(name=f'<{prefiximg}>`help`', value="Message d'aide d'origine")
+    await ctx.send(embed=e)
 
 @help.command(name='all')
 async def help_all(ctx):
-	c = discord.Embed(description='📚 All the commands 📚', title='➡️Commands list', color=0x003366, timestamp=datetime.utcnow())
-	c.set_thumbnail(url="https://cdn.discordapp.com/emojis/471044511804686348.gif?v=1")
-	c.add_field(name="`help`, `info`, `ping`, `suggest <suggestion>`, `bugreport <bug>`, `kick <member/id>`,`ban <member/id> <reason>`, `clear <amount of messages>`, `clear <amount of messages>`, `pp <user>`, `roll <number>`", value='Full commands list')
-	c.add_field(name="`info`, `utilities`, `moderator`, `fun`", value='Help categories')
-	await ctx.send(embed=c)
+    c = discord.Embed(description="📚 Toutes les commandes", title="➡️Commands list", color=0x003366, timestamp=datetime.utcnow())
+    c.set_thumbnail(url="https://cdn.discordapp.com/emojis/471044511804686348.gif?v=1")
+    c.add_field(name="`help`, `info`, `ping`, `kick <membre/id>`,`ban <membre/id> <raison>`, `clear <nombre de messages>`, `pp <utilisateur>`, `roll <nombre>`", value="Liste complète")
+    c.add_field(name="`info`, `utilities`, `moderator`, `fun`", value="Catégories d'aide")
+    await ctx.send(embed=c)
 
 @help.command(name='utilities')
 async def help_utilities(ctx):
-	c = discord.Embed(description='⚒️ Utilities ⚒️', title='➡️Commands list', color=0x003366, timestamp=datetime.utcnow())
-	c.set_thumbnail(url="https://cdn.discordapp.com/emojis/395627468276367370.png?v=1")
-	c.add_field(name=f'<{prefiximg}>`pp <user>`', value='Get the profile picture of some user')
-	c.add_field(name=f'<{prefiximg}>`wiki <request>`', value='Search WikiPedia for whatever you want !')
-	await ctx.send(embed=c)
+    c = discord.Embed(description='⚒️ Utilitaires', title='➡️Commands list', color=0x003366, timestamp=datetime.utcnow())
+    c.set_thumbnail(url="https://cdn.discordapp.com/emojis/395627468276367370.png?v=1")
+    c.add_field(name=f'<{prefiximg}>`pp <utilisateur>`', value='Retourne la photo de profil d\un utilisateur')
+    await ctx.send(embed=c)
 
 @help.command(name="moderator")
 async def help_moderator(ctx):
-	a = discord.Embed(description="🛡️ Moderator commands 🛡️", title='➡️Commands list', color=0xffff00, timestamp=datetime.utcnow()) 
-	a.set_thumbnail(url="https://cdn.discordapp.com/emojis/474539445379661824.png?v=1")
-	a.add_field(name=f'<{prefiximg}>`kick <member/id>`', value='Kick someone from the server')
-	a.add_field(name=f'<{prefiximg}>`ban <member/id> <reason>`', value='Kick a member from the server permanently (ban)')
-	a.add_field(name=f'<{prefiximg}>`clear <amount of messages>`', value='Delete a specific number of messages (no limit - be extremely careful)')
-	await ctx.send(embed=a)
+    a = discord.Embed(description="🛡️ Modération", title='➡️Commands list', color=0xffff00, timestamp=datetime.utcnow()) 
+    a.set_thumbnail(url="https://cdn.discordapp.com/emojis/474539445379661824.png?v=1")
+    a.add_field(name=f'<{prefiximg}>`kick <member/id>`', value='Exclure un membre')
+    a.add_field(name=f'<{prefiximg}>`ban <member/id> <reason>`', value='Bannir un membre')
+    a.add_field(name=f'<{prefiximg}>`clear <amount of messages>`', value='Supprimer un nombre de messages')
+    await ctx.send(embed=a)
 
 @help.command(name="fun")
 async def help_fun(ctx):
-	d = discord.Embed(description='🎀 Fun 🎀', title='➡️Commands list', color=0xFFA2DD, timestamp=datetime.utcnow())
-	d.set_thumbnail(url="https://cdn.discordapp.com/emojis/398860813881835533.png?v=1")
-	d.add_field(name='`roll <number>`', value="Roll a dice with the specified number of faces (no limit !)")
-	d.add_field(name='Lots of commands incoming !', value="Stay awhile, they'll be deployed soon ;)")
-	await ctx.send(embed=d)
+    d = discord.Embed(description='🎀 Fun', title='➡️Commands list', color=0xFFA2DD, timestamp=datetime.utcnow())
+    d.set_thumbnail(url="https://cdn.discordapp.com/emojis/398860813881835533.png?v=1")
+    d.add_field(name='`roll <number>`', value="Jetez un dé.")
+    await ctx.send(embed=d)
 
 @commands.check(is_owner)
 @help.command(name="master")
 async def help_master(ctx):
-	b = discord.Embed(description='♥️ Master commands ♥️', title='➡️Commands list', color=0xFF0000, timestamp=datetime.utcnow())
-	b.set_thumbnail(url="https://cdn.discordapp.com/attachments/476653267036930049/498859365046943745/1538964466545.png")
-	b.add_field(name=f'<{prefiximg}>`say <channel> <text>`', value='Talk through me !')
-	b.add_field(name=f'<{prefiximg}>`shutdown`', value='Shut me down...')
-	try:
-		await ctx.send(embed=b)
-	except:
-		await ctx.send("Access denied ! Y~you're not my master !")
+    b = discord.Embed(description='♥️ Commandes réservées', title='➡️Commands list', color=0xFF0000, timestamp=datetime.utcnow())
+    b.set_thumbnail(url="https://cdn.discordapp.com/attachments/476653267036930049/498859365046943745/1538964466545.png")
+    b.add_field(name=f'<{prefiximg}>`say <channel> <text>`', value='Faites-moi dire des trucs. :P')
+    b.add_field(name=f'<{prefiximg}>`shutdown`', value='ÉTEIGNEZ-MOI AAAAAAH')
+    try:
+        await ctx.send(embed=b)
+    except:
+        await ctx.send("DENIED")
 
 #fun
 
-@commands.command()
-@commands.cooldown(rate=1, per=2.0, type=commands.BucketType.user)
-async def urban(self, ctx, *, search: str):
-	""" Find the 'best' definition to your words """
-	if not permissions.can_embed(ctx):
-		return await ctx.send("I cannot send embeds here ;-;")
-
-	url = await http.get(f'http://api.urbandictionary.com/v0/define?term={search}', res_method="json")
-
-	if url is None:
-		return await ctx.send("I think the API broke...")
-
-	count = len(url['list'])
-	if count == 0:
-		return await ctx.send("Couldn't find your search in the dictionary...")
-	result = url['list'][random.randint(0, count - 1)]
-	
-	definition = result['definition']
-	if len(definition) >= 1000:
-		definition = definition[:1000]
-		definition = definition.rsplit(' ', 1)[0]
-		definition += '...'
-	
-	embed = discord.Embed(colour=0xC29FAF, description=f"**{result['word']}**\n*by: {result['author']}*")
-	embed.add_field(name='Definition', value=definition, inline=False)
-	embed.add_field(name='Example', value=result['example'], inline=False)
-	embed.set_footer(text=f"👍 {result['thumbs_up']} | 👎 {result['thumbs_down']}")
-
-	try:
-		await ctx.send(embed=embed)
-	except discord.Forbidden:
-		await ctx.send("I found something, but have no access to post it... [Embed permissions]")
-
 @bot.command()
 async def roll(ctx, value: int):
-	try:
-		result=randint(1,value)
-		msg = await ctx.send(f'And the result is...')
-		await asyncio.sleep(2)
-		await msg.edit(content=f'And the result is... {result} ! 🎉')
-	except:
-		await ctx.send('Please send a valid number of messages !')
+    try:
+        result=randint(1,value)
+        msg = await ctx.send(f'Et le résultat est...')
+        await asyncio.sleep(2)
+        await msg.edit(content=f'Et le résultat est... {result} ! 🎉')
+    except:
+        await ctx.send('Entrée invalide')
 
 @bot.command(aliases=['utilities', 'moderator', 'all', 'master'])
 async def fun(ctx):
-	await ctx.send("Please type `k!help <name of the category>` to get specific help about a category. Don't forget the `help` !")
-
-@bot.command(aliases=['add', 'invitelink'])
-async def invite(ctx):
-	await ctx.send("""Here is my invite link ! Thanks for adding me ♥
-<https://bit.ly/2KCvxDw>""")
+    await ctx.send("Usage correct pour cette commande : `:3help <categorie>`")
 
 #utils
 
 @bot.command(aliases=['profilepic', 'ppic', 'avatar'])
 async def pp(ctx, usr: discord.User):
-	e = discord.Embed(description="👤 {}'s profile picture".format(usr.name), title='➡️Avatar', color=0x5D5DFF, timestamp=datetime.utcnow())
-	e.set_image(url=usr.avatar_url)
-	await ctx.send(embed=e)
-
-@bot.command()
-async def wiki(ctx, wiki):
-	a=f"""**WikiPedia Search**
-🔀 *More info* https://en.wikipedia.org/wiki/{wiki}"""
-	await ctx.send(a)
-
-@bot.command()
-async def coolservs(ctx):
-	e = discord.Embed(description="🌴 Nicu servers 🌴", title='➡️Discover other places', color=0xFFFFFF, timestamp=datetime.utcnow())
-	e.set_thumbnail(url="https://cdn.discordapp.com/attachments/476653267036930049/499655332788830208/471600972045484032.png")
-	e.add_field(name='The Aperture Project', value='A nice place to chill out and have fun, with giveaways, kawaii pics and a super friendly community ! https://discord.gg/JEUUM8c')
-	e.add_field(name="Sebis's bot tutorial", value='The best server to learn how to code bots in different languages ! https://discord.gg/GWdhBSp')
-	await ctx.send(embed=e)
+    e = discord.Embed(description="👤 Photo de profil de {}".format(usr.name), title='➡️Avatar', color=0x5D5DFF, timestamp=datetime.utcnow())
+    e.set_image(url=usr.avatar_url)
+    await ctx.send(embed=e)
 
 @commands.check(is_owner)
 @bot.command(pass_context=True)
 async def say(ctx, channel: discord.TextChannel, *, text):
-	try:
-		await ctx.channel.send(text)
-	except Exception as e:
-		print(e.args)
+    try:
+        await ctx.channel.send(text)
+    except Exception as e:
+        print(e.args)
 
 @say.error
 async def say_handler(ctx, err):
-	if isinstance(err, commands.CheckFailure):
-		await ctx.send('Sorry, but only my master can use this command !')
-	else:
-		raise err
+    if isinstance(err, commands.CheckFailure):
+        await ctx.send('Seul ma maîtresse peut utiliser cette com. UwU')
+    else:
+        raise err
 
 @commands.check(is_owner)
 @bot.command()
 async def shutdown(ctx):
-	try:
-		await ctx.send('Yes Master !')
-		await ctx.send('Shutting down...')
-		await ctx.send('Bye !')
-		print(('[' + ctime()) + '] Succesfully shutted down.')
-		sys.exit()
-	except Exception as e:
-		print(e.args)
-		await ctx.send('An error occured. You should check the logs, I am sure it is nothing !')
+    try:
+        await ctx.send('Bye !')
+        print(('[' + ctime()) + '] Succesfully shutted down.')
+        sys.exit()
+    except Exception as e:
+        print(e.args)
+        await ctx.send('Une erreur est survenue.')
 
 @shutdown.error
 async def shutdown_handler(ctx, err):
-	if isinstance(err, commands.CheckFailure):
-		await ctx.send('Access denied. You are not my Master !')
-	else:
-		raise err
+    if isinstance(err, commands.CheckFailure):
+        await ctx.send('Back off !')
+    else:
+        raise err
 
 @commands.has_permissions(ban_members=True)
 @bot.command()
 async def ban(ctx, member: discord.Member, *, reason: str = None):
-	try:
-		if reason==None:
-			await member.ban()
-			await ctx.send('Member'+member+'was successfully banned ! Good bye !')
-			await ctx.send('And dont come back !')
-		else:
-			await member.ban(reason=reason)
-			await ctx.send(f'Member'+member+'was successfully banned for the following reason : {reason} ! Good bye !')
-	except Exception as e:
-		print(e.args)
-		await ctx.send('An error occured. Maybe did you enter a wrong username ?')
+    try:
+        if reason==None:
+            await member.ban()
+            await ctx.send(f'{member.name} a été banni <3')
+            await ctx.send('And dont come back !')
+        else:
+            await member.ban(reason=reason)
+            await ctx.send(f'{member} a été banni ! Raison : ```{reason}```')
+		except Exception as e:
+        print(e.args)
+        await ctx.send('Une erreur est survenue.')
 
 @commands.has_permissions(kick_members=True)
 @bot.command()
 async def kick(ctx, *, member: discord.Member):
-	try:
-		await member.kick()
-		await ctx.send('Member', member, 'was successfully kicked ! Babaï !')
-	except Exception as e:
-		print(e.args)
-		await ctx.send('An error occured. Maybe did you enter a wrong username ?')
+    try:
+        await member.kick()
+        await ctx.send(f'{member} a été exclu du serveur.')
+    except Exception as e:
+        print(e.args)
+        await ctx.send('Une erreur est survenue.')
 
 @commands.has_permissions(manage_messages=True)
 @bot.command()
 async def clear(ctx, amount: int):
-	amount=amount+1
-	try:
-		deleted = await ctx.channel.purge(limit=amount)
-		await ctx.send(f"`{len(deleted)}` messages successfully deleted !", delete_after = 5)
-	except:
-		await ctx.send("Something went wrong. Please retry indicating positive numbers only.")
+    amount=amount+1
+    try:
+        deleted = await ctx.channel.purge(limit=amount)
+        await ctx.send(f"`{len(deleted)}` messages supprimés avec succès !", delete_after = 5)
+    except:
+        await ctx.send("Une erreur est survenue.")
 
 @kick.error
 async def kick_handler(ctx, err):
-	if isinstance(err, commands.has_permissionsFailure):
-		await ctx.send('W~what are you trying to do ?! You dont have the required permissions, baka !')
-		await ctx.send("I won't let you do that !")
-	else :
-		raise err
+    if isinstance(err, commands.has_permissionsFailure):
+        await ctx.send('Ne me fais pas faire quelque chose que tu n\'as pas le droit de faire !')
+    else :
+        raise err
 
 @bot.command()
 async def info(ctx):
-	a = """Created by Poulpy#9355
-Hosted on Heroku
-Running on discord.py v1.0.0a
-[Invite link](https://discordapp.com/oauth2/authorize?client_id=467332623677521940&scope=bot&permissions=2146958591)
-[Official Server](https://discord.gg/PTT9UpZ)"""
-	e = discord.Embed(description="Kanna Kamui, the Kawaii Discord bot !", title='More about me', color=0xF4A2FF, timestamp=datetime.utcnow())
-	e.set_thumbnail(url="https://media.discordapp.net/attachments/489041727697584148/505805443453419541/1540620568476.png?width=376&height=376")
-	e.add_field(name="Information", value=a)
-	e.set_footer(text=botversion)
-	e.set_author(name=bot.user.name, icon_url=bot.user.avatar_url)
-	await ctx.send(embed=e)
-
-@bot.command()
-async def bugreport(ctx, *, bug):
-	my_guild = bot.get_guild(462871882916560896)
-	bugreport = my_guild.get_channel(462876207097053195)
-	e = discord.Embed(description=bug, title='Bug Report', color=16711680, timestamp=datetime.utcnow())
-	e.set_footer(text='Kanna - The Kawaii Discord bot')
-	e.set_author(name=ctx.author, icon_url=ctx.author.avatar_url)
-	await bugreport.send(embed=e)
-	await ctx.send('A~a bug ?... Hope my master will be able to correct that... Anyway, thanks !')
-
-@bot.command()
-async def suggest(ctx, *, suggestion):
-	my_guild = bot.get_guild(462871882916560896)
-	suggested = my_guild.get_channel(464517370036224011)
-	e = discord.Embed(description=suggestion, title='Suggestion', color=4259584, timestamp=datetime.utcnow())
-	e.set_footer(text='Kanna - The Kawaii Discord bot')
-	e.set_author(name=ctx.author, icon_url=ctx.author.avatar_url)
-	await suggested.send(embed=e)
-	await ctx.send('Suggestion sent ! Thanks for your implication !')
+    a = """Créé par une pieuvre
+serveur de la pieuvre : [cliquez ici](https://discord.gg/JEUUM8c)"""
+    e = discord.Embed(description="ako-bot", color=0xF4A2FF, timestamp=datetime.utcnow())
+    e.add_field(name="Informations", value=a)
+    e.set_footer(text=botversion)
+    e.set_author(name=bot.user.name, icon_url=bot.user.avatar_url)
+    await ctx.send(embed=e)
 
 @bot.command()
 async def ping(ctx):
-	t = await ctx.send('Pong!')
-	ms = (t.timestamp - ctx.message.timestamp).total_seconds() * 1000
-	await t.edit(new_content=f'Pong! Latency : **{int(ms)} milliseconds** !')
+    t = await ctx.send('Pong!')
+    ms = (t.timestamp - ctx.message.timestamp).total_seconds() * 1000
+    await t.edit(new_content=f'Pong! Latence : **{int(ms)} milliseconds** !')
 
-bot.run(bot.run(os.environ['TOKEN']))
+bot.run(os.environ['TOKEN']))
