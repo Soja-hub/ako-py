@@ -60,9 +60,9 @@ async def status_task():
 
 @bot.event
 async def on_member_join(member):
-	serv = bot.get_guild(691697960274362371)
-	chan = serv.get_channel(691697960274362371)
-	a = """Prends les différents rôles proposés :
+    serv = bot.get_guild(691697960274362371)
+    chan = serv.get_channel(691697960274362371)
+    a = """Prends les différents rôles proposés :
 
 — <#647732883254935553>
 — <#681109048229495001>
@@ -73,7 +73,7 @@ Viens nous saluer dans <#640251005908287505>, on veut faire ta connaissance ! ew
 Des questions ? Contacte <@580590592577503243>."""
     if member.guild.id == 640251005476405268:
         e = discord.Embed(title=f"Bienvenue, {member.name} !", description=a, color = 0xf9bbec)
-		await chan.send(embed=e)
+        await chan.send(embed=e)
 
 @bot.event
 async def on_command_error(ctx, error):
