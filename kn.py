@@ -112,9 +112,9 @@ async def help(ctx):
 @help.command(name="info")
 async def help_info(ctx):
     e = discord.Embed(description="📎 Commandes de base", title='➡️Commands list', color=0x00FFC0, timestamp=datetime.utcnow())
-    e.add_field(name=f'<{prefiximg}>`info`', value="Apprenez-en plus sur moi :3")
-    e.add_field(name=f'<{prefiximg}>`ping`', value="Testez ma réactivité !")
-    e.add_field(name=f'<{prefiximg}>`help`', value="Message d'aide d'origine")
+    e.add_field(name='`info`', value="Apprenez-en plus sur moi :3")
+    e.add_field(name='`ping`', value="Testez ma réactivité !")
+    e.add_field(name='`help`', value="Message d'aide d'origine")
     await ctx.send(embed=e)
 
 @help.command(name='all')
@@ -128,17 +128,16 @@ async def help_all(ctx):
 @help.command(name='utilities')
 async def help_utilities(ctx):
     c = discord.Embed(description='⚒️ Utilitaires', title='➡️Commands list', color=0x003366, timestamp=datetime.utcnow())
-    c.set_thumbnail(url="https://cdn.discordapp.com/emojis/395627468276367370.png?v=1")
-    c.add_field(name=f'<{prefiximg}>`pp <utilisateur>`', value='Retourne la photo de profil d\un utilisateur')
+    c.add_field(name='`pp <utilisateur>`', value='Retourne la photo de profil d\'un utilisateur')
     await ctx.send(embed=c)
 
 @help.command(name="moderator")
 async def help_moderator(ctx):
     a = discord.Embed(description="🛡️ Modération", title='➡️Commands list', color=0xffff00, timestamp=datetime.utcnow()) 
     a.set_thumbnail(url="https://cdn.discordapp.com/emojis/474539445379661824.png?v=1")
-    a.add_field(name=f'<{prefiximg}>`kick <member/id>`', value='Exclure un membre')
-    a.add_field(name=f'<{prefiximg}>`ban <member/id> <reason>`', value='Bannir un membre')
-    a.add_field(name=f'<{prefiximg}>`clear <amount of messages>`', value='Supprimer un nombre de messages')
+    a.add_field(name='`kick <member/id>`', value='Exclure un membre')
+    a.add_field(name='`ban <member/id> <reason>`', value='Bannir un membre')
+    a.add_field(name='`clear <amount of messages>`', value='Supprimer un nombre de messages')
     await ctx.send(embed=a)
 
 @help.command(name="fun")
@@ -153,8 +152,8 @@ async def help_fun(ctx):
 async def help_master(ctx):
     b = discord.Embed(description='♥️ Commandes réservées', title='➡️Commands list', color=0xFF0000, timestamp=datetime.utcnow())
     b.set_thumbnail(url="https://cdn.discordapp.com/attachments/476653267036930049/498859365046943745/1538964466545.png")
-    b.add_field(name=f'<{prefiximg}>`say <channel> <text>`', value='Faites-moi dire des trucs. :P')
-    b.add_field(name=f'<{prefiximg}>`shutdown`', value='ÉTEIGNEZ-MOI AAAAAAH')
+    b.add_field(name='`say <channel> <text>`', value='Faites-moi dire des trucs. :P')
+    b.add_field(name='`shutdown`', value='ÉTEIGNEZ-MOI AAAAAAH')
     try:
         await ctx.send(embed=b)
     except:
