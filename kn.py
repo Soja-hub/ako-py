@@ -66,6 +66,7 @@ Viens nous saluer dans <#640251005908287505>, on veut faire ta connaissance ! ew
 Des questions ? Contacte <@580590592577503243>."""
     if member.guild.id == 640251005476405268:
         e = discord.Embed(title=f"Bienvenue, {member.name} !", description=a, color = 0xf9bbec)
+        e.set_image(url="https://cdn.discordapp.com/attachments/691975441879269397/708574268815835136/image0.gif")
         await chan.send(embed=e)
 
 @bot.event
