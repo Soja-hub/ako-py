@@ -36,6 +36,13 @@ print(('[' + ctime()) + '] Establishing connection with the bot...')
 bot = commands.Bot(description='Kanna - The Kawaii Discord bot - Server management bot ©2018 Poulpe#2356', command_prefix=':3')
 bot.remove_command('help')
 
+async def status_task():
+    while True:
+        names = [':3help', 'caresse Soja', f'avec {len(bot.users)} personnes']
+        for name in names:
+            await bot.change_presence(activity=discord.Game(name=name))
+            await asyncio.sleep(60*60)
+
 @bot.event
 async def on_ready():
     print(('[' + ctime()) + '] Connection successfully established with the bot user :', bot.user.name)
@@ -45,13 +52,6 @@ async def on_ready():
     print('___________________________________________________')
     bot.loop.create_task(status_task())
     bot.loop.create_task(update_stats())
-
-async def status_task():
-    while True:
-        names = [':3help', 'caresse Soja', f'avec {len(bot.users)} personnes']
-        for name in names:
-            await bot.change_presence(activity=discord.Game(name=name))
-            await asyncio.sleep(60*60)
 
 @bot.event
 async def on_member_join(member):
