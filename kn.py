@@ -54,8 +54,7 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-    serv = bot.get_guild(691697960274362371)
-    chan = serv.get_channel(691697960274362371)
+    chan = bot.get_channel(691697960274362371)
     a = """Prends les différents rôles proposés :
 
 — <#647732883254935553>
