@@ -38,7 +38,7 @@ bot.remove_command('help')
 
 async def status_task():
     while True:
-        names = [':3help', 'caresse Soja', f'avec {len(bot.users)} personnes']
+        names = [':3help', 'caresser Soja', f'avec {len(bot.users)} personnes']
         for name in names:
             await bot.change_presence(activity=discord.Game(name=name))
             await asyncio.sleep(60*60)
