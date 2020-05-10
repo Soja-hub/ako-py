@@ -65,7 +65,7 @@ Lis le <#708834260169129994> et viens nous saluer dans <#640251005908287505>, on
 
 Des questions ? Contacte <@580590592577503243>."""
     if member.guild.id == 640251005476405268:
-        e = discord.Embed(title=f"Bienvenue, {member.name} !", description=a, color = 0xf9bbec)
+        e = discord.Embed(title=f"Bienvenue, {member.mention} !", description=a, color = 0xf9bbec)
         e.set_image(url="https://cdn.discordapp.com/attachments/691975441879269397/708574268815835136/image0.gif")
         await chan.send(embed=e)
 
@@ -188,7 +188,7 @@ async def say(ctx, channel: discord.TextChannel, *, text):
 @say.error
 async def say_handler(ctx, err):
     if isinstance(err, commands.CheckFailure):
-        await ctx.send('Seul ma maîtresse peut utiliser cette com. UwU')
+        await ctx.send('Seule ma maîtresse peut utiliser cette com. UwU')
     else:
         raise err
 
