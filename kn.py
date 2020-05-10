@@ -268,23 +268,16 @@ async def ping(ctx):
     ms = (t.timestamp - ctx.message.timestamp).total_seconds() * 1000
     await t.edit(new_content=f'Pong! Latence : **{int(ms)} milliseconds** !')
 
+@commands.has_permissions(manage_roles=True)
 @bot.command()
 async def mute(ctx,member : discord.Member):
   guild = ctx.guild
   for role in guild.roles:
     if role.name —- "Muted":
-      await member.add.roles(role)
-      await ctx.send("{} has {} has been muted".format(member.mention,ctx.author.mention))
+      await member.add.roles("Muted")
+      await ctx.send("{} est maintenant muted.".format(member.mention,ctx))
       return 
 
-      overwrite = discord.PermissionsOverwrite(send_messages=False)
-      newRole = await guild.create_role(name="Muted")
-
-
-      for channel in guild.text_channels: 
-      await channel.set_permissions(newRole,overwrite=overwrite)
-    await member.add_roles(newRoles)
-    await ctx.send(" {} has {} has been muted ".format.member.mention,ctx.author.mention))
 
 @bot.command()
 async def unmute(ctx,member.discord.Member):
@@ -292,8 +285,8 @@ async def unmute(ctx,member.discord.Member):
   
   for role in guild.roles:
    if role.name —- "Muted"
-    await member.remove_roles(role)
-    await ctx.send(" {} has {} has been unmuted ".format(member.mention,ctx.author.mention))
+    await member.remove_roles("Muted")
+    await ctx.send("{} est enfin unmuted.".format(member.mention,ctx.author.mention))
     return
 
 bot.run(os.environ['TOKEN'])
