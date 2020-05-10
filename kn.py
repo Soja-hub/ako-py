@@ -61,7 +61,7 @@ async def on_member_join(member):
 — <#681109048229495001>
 — <#691534231976935504>
 
-Viens nous saluer dans <#640251005908287505>, on veut faire ta connaissance ! ewe
+Lis le <#708834260169129994> et viens nous saluer dans <#640251005908287505>, on veut faire ta connaissance ! ewe
 
 Des questions ? Contacte <@580590592577503243>."""
     if member.guild.id == 640251005476405268:
