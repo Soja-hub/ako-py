@@ -69,17 +69,6 @@ Des questions ? Contacte <@580590592577503243>."""
         e.set_image(url="https://cdn.discordapp.com/attachments/691975441879269397/708574268815835136/image0.gif")
         await chan.send(embed=e)
 
-@bot.event
-async def on_member_join(member):
-   mention=member.mention
-   guild=member.guild
-   await member.create.dm()
-   await member.dm_channel.send(" Merci d’avoir rejoint le serveur. 
-Viens nous saluer dans <#640251005908287505>, on veut tellement faire connaissance avec toi..
-
-Je te redonne une invitation si jamais tu aimerais revenir : https://discord.gg/gY7nRsM")
-
-
 
 @bot.event
 async def on_command_error(ctx, error):
